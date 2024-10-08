@@ -1,0 +1,8 @@
+- There must be cases that clients want to upload more than a file, ask the clients to enter the name of the file clients would love to query
+- Read file before allowing clients to input start and end time
+- Look for any columns including "gio", "thoi gian"
+- Case for a file having many sheets :<<
+--> Ask clients to enter the correct sheet name containing in the xlsx file
+--> If no, auto to sheets[0]
+- Check if file is xlsx or not in FE
+- Suggest for start and end time available

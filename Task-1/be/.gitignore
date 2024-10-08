@@ -2,7 +2,11 @@
 main
 
 # Ignore temporary files
-tmp/
+tmp/*
+
+# Ignore files
+*.exe
+*.log
 
 # Ignore the uploaded files
-uploads/
+uploads/*
