@@ -1,0 +1,8 @@
+# Ignore the Go binary
+main
+
+# Ignore temporary files
+tmp/
+
+# Ignore the uploaded files
+uploads/
