@@ -13,7 +13,7 @@ const Home = () => {
           <Upload />
           <Time />
           <button type="submit" className="w-full bg-[#536be0] hover:bg-[#455ac1] text-[#f2f7ff] rounded-lg py-2">
-            Calculate
+            Tính tổng
           </button>
         </form>
       </div>

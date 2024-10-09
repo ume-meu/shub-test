@@ -12,7 +12,7 @@ const DataTable = () => {
           <div className="flex flex-col items-center justify-center">
             <img src={Cat} alt="No data" className="w-60" />
             <p className="text-lg font-bold text-[#455ac1] text-center -mt-6">
-              Start uploading a new xlsx file
+            Không có gì được hiển thị ở đây! Hãy thử tải lên tệp mới.
             </p>
           </div>
         </div>

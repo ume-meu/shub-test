@@ -4,7 +4,7 @@ const Time = ({ start, end }) => {
   return (
     <div className="flex flex-col items-center h-fit border-2 border-dashed border-[#536be0] hover:border-[#455ac1] rounded-lg p-4">
       <div className="time mb-4">
-        <label>Start Time:</label>
+        <label>Giờ bắt đầu:</label>
         <input
           type="text"
           className="bg-transparent border-none outline-none"
@@ -13,7 +13,7 @@ const Time = ({ start, end }) => {
         />
       </div>
       <div className="time">
-        <label>End Time:</label>
+        <label>Giờ kết thúc:</label>
         <input
           type="text"
           className="bg-transparent border-none outline-none"
