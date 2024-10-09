@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
 // API to upload file
@@ -158,6 +159,12 @@ func queryData(c *fiber.Ctx) error {
 
 func main() {
 	app := fiber.New()
+
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "http://localhost:5173",
+		AllowMethods: "POST, GET, OPTIONS",
+		AllowHeaders: "Content-Type, Authorization", // Allow these headers
+	}))
 
 	app.Post("/upload", uploadXlsx)
 	app.Get("/query", queryData)

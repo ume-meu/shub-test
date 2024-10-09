@@ -43,9 +43,20 @@ const Upload = () => {
   };
 
   // upload file
-  const handleUpload = () => {
+  const handleUpload = async () => {
     const formData = new FormData();
     formData.append("file", file);
+
+    try {
+      const res = await axiosInstance.post("/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data", // Use multipart/form-data for file uploads
+        },
+      });
+      console.log(res.data);
+    } catch (error) {
+      setError(error.response.data.message || "Error uploading file");
+    }
     console.log(formData.get("file"));
   };
   
