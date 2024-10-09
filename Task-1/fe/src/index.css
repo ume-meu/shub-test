@@ -10,5 +10,9 @@
   }
   body{
     background-color: #f5efff;
+    overflow-x: hidden;
+    overflow-y: hidden;
   }
 }
+
+@layer components {}
