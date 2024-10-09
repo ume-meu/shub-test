@@ -140,7 +140,7 @@ func queryData(c *fiber.Ctx) error {
 		}
 
 		// Check time
-		if !timeCol.After(start) && !timeCol.Before(end) {
+		if !timeCol.Before(start) && !timeCol.After(end) {
 			amount, err := strconv.ParseFloat(strings.ReplaceAll(row[amountIdx], ",", ","), 64)
 			if err != nil {
 				continue // skip rows with invalid amount format

@@ -9,10 +9,31 @@
     font-family: "Noto Sans", serif;
   }
   body{
-    background-color: #f5efff;
+    background-color: #f2f7ff;
     overflow-x: hidden;
-    overflow-y: hidden;
+    overflow-y: hidden; 
   }
 }
 
-@layer components {}
+@layer components {
+  .file{
+    @apply relative ;
+  }
+  .file::before,
+  .file::after {
+    @apply content-[""] bg-[#455ac1] h-px w-1/5 absolute -translate-y-2/4 top-2/4;
+  }
+
+  .time{
+    @apply border-b border-opacity-20 border-b-[#536be0] hover:border-opacity-50 placeholder:text-[#536be0];
+  }
+  .time label{
+    @apply text-[#455ac1] text-xs font-medium text-opacity-90;
+  }
+  .time input{
+    @apply text-[#455ac1] text-base font-semibold;
+  }
+  .time input::placeholder{
+    @apply text-[#455ac1] text-opacity-40; 
+  }
+}
