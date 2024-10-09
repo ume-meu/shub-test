@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
+import Cat from "../assets/cat.svg";
 
 const DataTable = () => {
+  const [data, setData] = useState(false);
   return (
-    <div className="h-full border-2 border-dashed border-[#536be0] hover:border-[#455ac1] rounded-lg">
-      DataTable
+    <div className="h-full border-2 border-dashed border-[#536be0] hover:border-[#455ac1]">
+      {data ? (
+        ""
+      ) : (
+        <div className="flex flex-col items-center justify-center h-screen mt-[-40px]">
+          <div className="flex flex-col items-center justify-center">
+            <img src={Cat} alt="No data" className="w-60" />
+            <p className="text-lg font-bold text-[#455ac1] text-center -mt-6">
+              Start uploading a new xlsx file
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
