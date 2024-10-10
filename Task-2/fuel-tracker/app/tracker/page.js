@@ -4,7 +4,7 @@ import Link from 'next/link';
 import React, { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 
-const page = () => {
+const Page = () => {
   const [error, setError] = useState(null);
   const [time, setTime] = useState("");
   const [quantity, setQuantity] = useState("");
@@ -162,4 +162,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
