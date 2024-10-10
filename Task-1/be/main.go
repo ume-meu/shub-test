@@ -48,7 +48,17 @@ func uploadXlsx(c *fiber.Ctx) error {
 
 	return c.Status(200).JSON(fiber.Map{
 		"error": false,
-		"msg":   "File uploaded and processed successfully",
+		"msg":   "File Uploaded And Processed Successfully",
+		// "path":  outputCSVPath,
+	})
+}
+
+// API to get data
+func getAllData(c *fiber.Ctx) error {
+
+	return c.Status(200).JSON(fiber.Map{
+		"error": false,
+		"msg":   "Get Data successfully",
 		// "path":  outputCSVPath,
 	})
 }
@@ -167,6 +177,7 @@ func main() {
 	}))
 
 	app.Post("/upload", uploadXlsx)
+	app.Get("/get-all-data", getAllData)
 	app.Get("/query", queryData)
 
 	app.Listen(":8080")

@@ -17,9 +17,6 @@ const Home = () => {
         <div className="flex flex-col pr-4 justify-between h-full" onSubmit={handleSubmit}>
           <Upload />
           <Time />
-          <button type="submit" className="w-full bg-[#536be0] hover:bg-[#455ac1] text-[#f2f7ff] rounded-lg py-2">
-            Calculate
-          </button>
         </div>
       </div>
 

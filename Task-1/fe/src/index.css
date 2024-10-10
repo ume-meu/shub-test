@@ -13,6 +13,15 @@
     overflow-x: hidden;
     overflow-y: hidden; 
   }
+  ::-webkit-scrollbar {
+    @apply w-[0] h-[0] rounded-[10px];
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent rounded-[10px];
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-[#bec6f3] rounded-[10px] hover:bg-[#6b77b7];
+  }
 }
 
 @layer components {
@@ -25,10 +34,10 @@
   }
 
   .time{
-    @apply border-b border-opacity-20 border-b-[#536be0] hover:border-opacity-50 placeholder:text-[#536be0];
+    @apply  w-full border-b border-opacity-20 border-b-[#536be0] hover:border-opacity-50 placeholder:text-[#536be0];
   }
   .time label{
-    @apply text-[#455ac1] text-xs font-medium text-opacity-90;
+    @apply text-[#455ac1] text-xs font-medium text-opacity-90 block w-full;
   }
   .time input{
     @apply text-[#455ac1] text-base font-semibold;
@@ -36,4 +45,6 @@
   .time input::placeholder{
     @apply text-[#455ac1] text-opacity-40; 
   }
+
+  
 }
