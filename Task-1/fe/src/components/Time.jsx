@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { validateTime } from "../utils/helper";
+import { trimTime } from "../utils/helper";
 import axiosInstance from "../utils/axiosInstance";
 
 const Time = () => {
@@ -11,35 +11,6 @@ const Time = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!start) {
-      setError("Cần nhập giờ bắt đầu");
-      return;
-    }
-
-    if (!validateTime(start)) {
-      setError("Cần nhập đúng định dạng giờ bắt đầu: HH:MM:SS.");
-      return;
-    }
-
-    if (!end) {
-      setError("Cần nhập giờ kết thúc");
-      return;
-    }
-
-    if (!validateTime(end)) {
-      setError("Cần nhập đúng định dạng giờ kết thúc: HH:MM:SS.");
-      return;
-    }
-
-    const startTime = new Date(`1970-01-01T${start}`);
-    const endTime = new Date(`1970-01-01T${end}`);
-    if (startTime >= endTime) {
-      setError("Thời gian bắt đầu không được lớn hơn thời gian kết thúc.");
-      return;
-    }
-
-    setError(null);
   };
 
   const getAmount = async (e) => {
@@ -97,7 +68,7 @@ const Time = () => {
               type="text"
               className="bg-transparent border-none outline-none"
               placeholder="HH:MM:SS"
-              value={start}
+              value={trimTime(start)}
               onChange={(e) => {
                 setStart(e.target.value);
               }}
@@ -109,7 +80,7 @@ const Time = () => {
               type="text"
               className="bg-transparent border-none outline-none"
               placeholder="HH:MM:SS"
-              value={end}
+              value={trimTime(end)}
               onChange={(e) => {
                 setEnd(e.target.value);
               }}
@@ -122,7 +93,7 @@ const Time = () => {
             type="submit"
             className="w-full bg-[#536be0] hover:bg-[#455ac1] text-[#f2f7ff] rounded-lg py-2 mb-2"
           >
-            Calculate
+            Tính toán
           </button>
 
           {error && (

@@ -45,6 +45,4 @@
   .time input::placeholder{
     @apply text-[#455ac1] text-opacity-40; 
   }
-
-  
 }

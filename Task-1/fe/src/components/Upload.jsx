@@ -3,7 +3,7 @@ import Paw from "../assets/paw.svg";
 import axiosInstance from "../utils/axiosInstance";
 import { validateFile } from "../utils/helper";
 
-const Upload = () => {
+const Upload = ({ onDataUpdated }) => {
   const [success, setSuccess] = useState(null);
   const [error, setError] = useState(null);
   const [file, setFile] = useState(null);
@@ -56,9 +56,11 @@ const Upload = () => {
       });
 
       setSuccess("Tải tệp thành công.");
+
       setTimeout(() => {
         setSuccess(null);
       }, 2000);
+      onDataUpdated();
 
       setDrop(false);
       setUpload(false);

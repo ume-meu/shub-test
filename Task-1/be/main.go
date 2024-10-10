@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"os/signal"
+	"reflect"
 	"strconv"
 	"strings"
 	"syscall"
@@ -101,7 +102,9 @@ func getAllData(c *fiber.Ctx) error {
 // API to query data
 func queryData(c *fiber.Ctx) error {
 	startTime := c.Query("start")
+	startTime = strings.TrimSpace(startTime)
 	endTime := c.Query("end")
+	endTime = strings.TrimSpace(endTime)
 
 	// Validate the query params
 	if startTime == "" {
@@ -119,6 +122,9 @@ func queryData(c *fiber.Ctx) error {
 
 	timeFormat := "15:04:05"
 	start, err := time.Parse(timeFormat, startTime)
+	fmt.Println("Type of start time:", reflect.TypeOf(startTime))
+	fmt.Println("Length of start time:", len(startTime))
+	fmt.Println("Length of format:", len(timeFormat))
 	if err != nil {
 		return c.Status(400).JSON(fiber.Map{
 			"error":   true,
