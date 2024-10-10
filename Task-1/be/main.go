@@ -20,8 +20,8 @@ func uploadXlsx(c *fiber.Ctx) error {
 	file, err := c.FormFile("file")
 	if err != nil {
 		return c.Status(400).JSON(fiber.Map{
-			"error": true,
-			"msg":   "File Not Found",
+			"error":   true,
+			"message": "File Not Found",
 		})
 	}
 
@@ -31,8 +31,8 @@ func uploadXlsx(c *fiber.Ctx) error {
 	// Save xlsx file
 	if err := c.SaveFile(file, uploadPath); err != nil {
 		return c.Status(500).JSON(fiber.Map{
-			"error": true,
-			"msg":   "Unable to save file",
+			"error":   true,
+			"message": "Unable to save file",
 		})
 	}
 
@@ -41,16 +41,16 @@ func uploadXlsx(c *fiber.Ctx) error {
 	// Convert XLSX file to CSV file
 	if err := convertXlsx(uploadPath, outputCSVPath); err != nil {
 		return c.Status(500).JSON(fiber.Map{
-			"error": true,
-			"msg":   err.Error(),
+			"error":   true,
+			"message": err.Error(),
 		})
 	}
 
 	os.Remove(uploadPath)
 
 	return c.Status(200).JSON(fiber.Map{
-		"error": false,
-		"msg":   "File Uploaded And Processed Successfully",
+		"error":   false,
+		"message": "File Uploaded And Processed Successfully",
 		// "path":  outputCSVPath,
 	})
 }
@@ -62,8 +62,8 @@ func getAllData(c *fiber.Ctx) error {
 	file, err := os.Open("./uploads/csvFile.csv")
 	if err != nil {
 		return c.Status(500).JSON(fiber.Map{
-			"error": true,
-			"msg":   "Failed To Open CSV File",
+			"error":   true,
+			"message": "Failed To Open CSV File",
 		})
 	}
 	defer file.Close()
@@ -75,8 +75,8 @@ func getAllData(c *fiber.Ctx) error {
 	header, err := reader.Read()
 	if err != nil {
 		return c.Status(500).JSON(fiber.Map{
-			"error": true,
-			"msg":   "Failed To Read Header",
+			"error":   true,
+			"message": "Failed To Read Header",
 		})
 	}
 
@@ -84,16 +84,16 @@ func getAllData(c *fiber.Ctx) error {
 	rows, err := reader.ReadAll()
 	if err != nil {
 		return c.Status(500).JSON(fiber.Map{
-			"error": true,
-			"msg":   "Failed To Read CSV File",
+			"error":   true,
+			"message": "Failed To Read CSV File",
 		})
 	}
 
 	return c.Status(200).JSON(fiber.Map{
-		"error":  false,
-		"msg":    "Get Data successfully",
-		"header": header,
-		"rows":   rows,
+		"error":   false,
+		"message": "Get Data successfully",
+		"header":  header,
+		"rows":    rows,
 		// "path":  outputCSVPath,
 	})
 }
@@ -106,14 +106,14 @@ func queryData(c *fiber.Ctx) error {
 	// Validate the query params
 	if startTime == "" {
 		return c.Status(400).JSON(fiber.Map{
-			"error": false,
-			"msg":   "Start Time Not Provided",
+			"error":   false,
+			"message": "Cần nhập giờ bắt đầu",
 		})
 	}
 	if endTime == "" {
 		return c.Status(400).JSON(fiber.Map{
-			"error": false,
-			"msg":   "End Time Not Provided",
+			"error":   false,
+			"message": "Cần nhập giờ kết thúc",
 		})
 	}
 
@@ -121,15 +121,22 @@ func queryData(c *fiber.Ctx) error {
 	start, err := time.Parse(timeFormat, startTime)
 	if err != nil {
 		return c.Status(400).JSON(fiber.Map{
-			"error": true,
-			"msg":   "Invalid Start Time Format",
+			"error":   true,
+			"message": "Sai định dạng thời gian bắt đầu",
 		})
 	}
 	end, err := time.Parse(timeFormat, endTime)
 	if err != nil {
 		return c.Status(400).JSON(fiber.Map{
-			"error": true,
-			"msg":   "Invalid End Time Format",
+			"error":   true,
+			"message": "Sai định dạng thời gian kết thúc",
+		})
+	}
+
+	if !start.Before(end) {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error":   true,
+			"message": "Thời gian bắt đầu không được lớn hơn thời gian kết thúc.",
 		})
 	}
 
@@ -137,8 +144,8 @@ func queryData(c *fiber.Ctx) error {
 	file, err := os.Open("./uploads/csvFile.csv")
 	if err != nil {
 		return c.Status(500).JSON(fiber.Map{
-			"error": true,
-			"msg":   "Failed To Open CSV File",
+			"error":   true,
+			"message": "Failed To Open CSV File",
 		})
 	}
 	defer file.Close()
@@ -150,8 +157,8 @@ func queryData(c *fiber.Ctx) error {
 	header, err := reader.Read()
 	if err != nil {
 		return c.Status(500).JSON(fiber.Map{
-			"error": true,
-			"msg":   "Failed To Read Header",
+			"error":   true,
+			"message": "Failed To Read Header",
 		})
 	}
 
@@ -170,8 +177,8 @@ func queryData(c *fiber.Ctx) error {
 	rows, err := reader.ReadAll()
 	if err != nil {
 		return c.Status(500).JSON(fiber.Map{
-			"error": true,
-			"msg":   "Failed To Read CSV File",
+			"error":   true,
+			"message": "Failed To Read CSV File",
 		})
 	}
 
