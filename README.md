@@ -13,14 +13,13 @@
 **Description**: Extract data from a provided `report.xlsx` file and calculate the total amount of transactions within a user-specified time range.
 
 - [Task 1 Documentation](./Task-1/readme.md)
-- [Task 1 Demo](https://example.com/task1-demo)
 
 ---
 ### :clipboard: Task 2: Transaction Form (Mandatory for FE, Flutter)
 **Description**: Implement a form to input transaction details for a fuel station. The form should validate fields such as time, quantity, pump number, revenue, and unit price.
 
 - [Task 2 Documentation](./Task-2/readme.md)
-- [Task 2 Demo](https://example.com/task2-demo)
+- [Task 2 Demo](https://fuel-tracker-silk.vercel.app/)
 
 ---
 ### :wrench: Task 3: Database Design (Mandatory for BE)  
