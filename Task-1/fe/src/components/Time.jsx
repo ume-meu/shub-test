@@ -49,7 +49,7 @@ const Time = () => {
             </div>
           </div>
           <label className="mb-6 text-[#455ac1] text-lg font-bold">
-            {totalAmount}
+            {totalAmount} (VNĐ)
           </label>
 
           <button
