@@ -34,7 +34,7 @@ This is new: ```go install github.com/air-verse/air@latest```
      ```bash
      cd note-app
      npm install
-     npm install react-router-dom react-icons react-modal axios moment
+     npm install react-router-dom react-icons react-modal axios moment  react-toastify
      ```
 
 3. **Set up the Backend:**

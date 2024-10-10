@@ -5,17 +5,16 @@ import DataTable from "../components/DataTable";
 import { validateTime } from "../utils/helper";
 
 const Home = () => {
-  const handleSubmit = (event) => {
-    event.preventDefault(); // Prevent form from auto-reloading
-    // Handle form submission logic here
+  const handleSubmit = (e) => {
+    e.preventDefault(); 
     console.log("Form submitted");
   };
 
   return (
     <div className="p-8 w-full h-screen flex">
       <div className="w-[20%]">
-        <div className="flex flex-col pr-4 justify-between h-full" onSubmit={handleSubmit}>
-          <Upload />
+        <div className="flex flex-col pr-4 justify-between h-full">
+          <Upload  onSubmit={handleSubmit}/>
           <Time />
         </div>
       </div>

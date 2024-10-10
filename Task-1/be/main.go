@@ -4,8 +4,10 @@ import (
 	"encoding/csv"
 	"fmt"
 	"os"
+	"os/signal"
 	"strconv"
 	"strings"
+	"syscall"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -56,9 +58,42 @@ func uploadXlsx(c *fiber.Ctx) error {
 // API to get data
 func getAllData(c *fiber.Ctx) error {
 
+	// Open csv file
+	file, err := os.Open("./uploads/csvFile.csv")
+	if err != nil {
+		return c.Status(500).JSON(fiber.Map{
+			"error": true,
+			"msg":   "Failed To Open CSV File",
+		})
+	}
+	defer file.Close()
+
+	// CSV Reader
+	reader := csv.NewReader(file)
+
+	// Read the first row from the CSV (header row)
+	header, err := reader.Read()
+	if err != nil {
+		return c.Status(500).JSON(fiber.Map{
+			"error": true,
+			"msg":   "Failed To Read Header",
+		})
+	}
+
+	// Read rows
+	rows, err := reader.ReadAll()
+	if err != nil {
+		return c.Status(500).JSON(fiber.Map{
+			"error": true,
+			"msg":   "Failed To Read CSV File",
+		})
+	}
+
 	return c.Status(200).JSON(fiber.Map{
-		"error": false,
-		"msg":   "Get Data successfully",
+		"error":  false,
+		"msg":    "Get Data successfully",
+		"header": header,
+		"rows":   rows,
 		// "path":  outputCSVPath,
 	})
 }
@@ -112,7 +147,7 @@ func queryData(c *fiber.Ctx) error {
 	reader := csv.NewReader(file)
 
 	// Read the first row from the CSV (header row)
-	headers, err := reader.Read()
+	header, err := reader.Read()
 	if err != nil {
 		return c.Status(500).JSON(fiber.Map{
 			"error": true,
@@ -121,7 +156,7 @@ func queryData(c *fiber.Ctx) error {
 	}
 
 	var timeIdx, amountIdx int
-	for index, header := range headers {
+	for index, header := range header {
 		lowerHeader := strings.ToLower(header)
 		if strings.Contains(lowerHeader, "giờ") {
 			timeIdx = index
@@ -180,5 +215,43 @@ func main() {
 	app.Get("/get-all-data", getAllData)
 	app.Get("/query", queryData)
 
-	app.Listen(":8080")
+	// app.Listen(":8080")
+
+	// Channel to listen for OS signals
+	sigChan := make(chan os.Signal, 1)
+	signal.Notify(sigChan, os.Interrupt, syscall.SIGTERM)
+
+	// Start the Fiber server in a goroutine
+	go func() {
+		if err := app.Listen(":8080"); err != nil {
+			fmt.Println("Shutting down server...")
+		}
+	}()
+
+	// Wait for a signal to terminate the program
+	<-sigChan
+	fmt.Println("Received shutdown signal. Cleaning up...")
+
+	// Cleanup: Remove files in the uploadPath
+	cleanup(uploadPath)
+	fmt.Println("Cleanup complete. Shutting down.")
+}
+
+var uploadPath = "./uploads"
+
+func cleanup(dir string) {
+	files, err := os.ReadDir(dir)
+	if err != nil {
+		fmt.Println("Error reading directory:", err)
+		return
+	}
+
+	for _, file := range files {
+		filePath := fmt.Sprintf("%s/%s", dir, file.Name())
+		if err := os.Remove(filePath); err != nil {
+			fmt.Println("Error deleting file:", filePath, err)
+		} else {
+			fmt.Println("Deleted file:", filePath)
+		}
+	}
 }

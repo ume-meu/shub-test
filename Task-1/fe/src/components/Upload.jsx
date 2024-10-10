@@ -1,9 +1,10 @@
-import React, {  useState } from "react";
+import React, { useEffect, useState } from "react";
 import Paw from "../assets/paw.svg";
 import axiosInstance from "../utils/axiosInstance";
 import { validateFile } from "../utils/helper";
 
 const Upload = () => {
+  const [success, setSuccess] = useState(null);
   const [error, setError] = useState(null);
   const [file, setFile] = useState(null);
 
@@ -29,15 +30,15 @@ const Upload = () => {
     e.preventDefault();
   };
   const handleDrop = (e) => {
-    e.preventDefault();  
+    e.preventDefault();
     const droppedFile = e.dataTransfer.files[0];
-  
+
     if (!validateFile(droppedFile)) {
       setError("Vui lòng tải lên tệp .xlsx hợp lệ.");
       return;
     }
     setDrop(true);
-  
+
     setError(null);
     setFile(droppedFile);
   };
@@ -53,17 +54,37 @@ const Upload = () => {
           "Content-Type": "multipart/form-data", // Use multipart/form-data for file uploads
         },
       });
+
+      setSuccess("Tải tệp thành công.");
+      setTimeout(() => {
+        setSuccess(null);
+      }, 2000);
+
+      setDrop(false);
+      setUpload(false);
+      setFile(null);
+
       console.log(res.data);
     } catch (error) {
       setError(error.response.data.message || "Error uploading file");
     }
     console.log(formData.get("file"));
   };
-  
+
   return (
-    <div className="relative h-fit items-center flex flex-col border-2 border-dashed border-[#536be0] hover:border-[#455ac1] rounded-lg text-[#455ac1]">
+    <div
+      className="relative h-fit items-center flex flex-col border-2 border-dashed border-[#536be0] hover:border-[#455ac1] rounded-lg text-[#455ac1]"
+      onDragOver={handleDragOver}
+      onDrop={handleDrop}
+    >
+      {success && (
+        <p className="text-[#4fadbe] text-xs absolute top-1 text-center items-center">
+          {success}
+        </p>
+      )}
+
       {/* Drag and drop File */}
-      <div className="py-14" onDragOver={handleDragOver} onDrop={handleDrop}>
+      <div className="py-14">
         {drop ? (
           <div className="flex flex-col w-full text-center justify-between">
             <p className="font-bold text-lg">{file.name}</p>
@@ -136,7 +157,7 @@ const Upload = () => {
       </div>
 
       {error && (
-        <p className="text-red-500 text-xs absolute bottom-1 text-center items-center">
+        <p className="text-[#c5456a] text-xs absolute bottom-1 text-center items-center">
           {error}
         </p>
       )}
